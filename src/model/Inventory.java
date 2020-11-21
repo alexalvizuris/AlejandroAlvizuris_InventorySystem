@@ -5,8 +5,8 @@ import javafx.collections.ObservableList;
 
 public class Inventory {
 
-    private ObservableList<Part> allParts = FXCollections.observableArrayList();
-    private ObservableList<Product> allProducts = FXCollections.observableArrayList();
+    protected ObservableList<Part> allParts = FXCollections.observableArrayList();
+    protected ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
     public void addPart(Part newPart) {
         allParts.add(newPart);
@@ -57,10 +57,46 @@ public class Inventory {
     }
 
     public void updatePart(int index, Part selectedPart) {
-        for (int i = 0; i < allParts.size(); i++) {
-            if ()
+        allParts.set(index, selectedPart);
+    }
+
+    public void updateProduct(int index, Product newProduct) {
+        allProducts.set(index, newProduct);
+    }
+
+    public boolean deletePart(Part selectedPart) {
+        while (true) {
+            if (allParts.contains(selectedPart)) {
+                allParts.remove(selectedPart);
+            }
         }
     }
+
+    public boolean deleteProduct(Product selectedProduct) {
+        while (true) {
+            if (allProducts.contains(selectedProduct)) {
+                allProducts.remove(selectedProduct);
+            }
+        }
+    }
+
+    public ObservableList<Part> getAllParts() {
+        ObservableList<Part> partsList = FXCollections.observableArrayList();
+        for (int i = 0; i < allParts.size(); i++) {
+            partsList.add(allParts.get(i));
+        }
+        return partsList;
+    }
+
+    public ObservableList<Product> getAllProducts() {
+        ObservableList<Product> productsList = FXCollections.observableArrayList();
+        for (int i = 0; i < allProducts.size(); i++) {
+            productsList.add(allProducts.get(i));
+        }
+        return productsList;
+    }
+
+
 
 
 
