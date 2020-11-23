@@ -1,10 +1,18 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class modifyProductController {
 
@@ -70,5 +78,25 @@ public class modifyProductController {
 
     @FXML
     private Button modifyProductCancel;
+
+    public void modifyProductSaveSelected(ActionEvent event) throws IOException {
+        Parent modifyProductSaveParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
+        Scene modifyProductSaveScene = new Scene(modifyProductSaveParent);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        stage.setScene(modifyProductSaveScene);
+        stage.show();
+    }
+
+    public void modifyProductCancelSelected(ActionEvent event) throws IOException {
+        Parent modifyProductCancelParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
+        Scene modifyProductCancelScene = new Scene(modifyProductCancelParent);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        stage.setScene(modifyProductCancelScene);
+        stage.show();
+    }
 
 }
