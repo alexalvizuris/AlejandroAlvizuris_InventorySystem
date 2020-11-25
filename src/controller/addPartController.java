@@ -11,6 +11,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.InHouse;
+import model.Inventory;
+import model.Outsourced;
+import model.Part;
 
 import java.io.IOException;
 
@@ -52,8 +56,45 @@ public class addPartController {
     @FXML
     private Button addPartCancel;
 
+    @FXML
     public void addPartSaveSelected(ActionEvent event) throws IOException {
-        Parent addPartSaveParent = FXMLLoader.load(getClass().getResource("/view/mainForm/"));
+
+        if (inHouseAdd.isSelected()) {
+            flexLabel.setText("Machine ID");
+            int id = Integer.parseInt(addPartId.getText());
+            String name = addPartName.getText();
+            double price = Double.parseDouble(addPartPrice.getText());
+            int stock = Integer.parseInt(addPartInv.getText());
+            int min = Integer.parseInt(addPartMin.getText());
+            int max = Integer.parseInt(addPartMax.getText());
+            int machineID = Integer.parseInt(flexTextField.getText());
+
+            Part inHouse = new InHouse(id, name, price, stock, min, max, machineID);
+            Inventory.addPart(inHouse);
+
+        }
+
+
+        if (outsourcedAdd.isSelected()) {
+
+            flexLabel.setText("Company Name");
+
+            int id = Integer.parseInt(addPartId.getText());
+            String name = addPartName.getText();
+            double price = Double.parseDouble(addPartPrice.getText());
+            int stock = Integer.parseInt(addPartInv.getText());
+            int min = Integer.parseInt(addPartMin.getText());
+            int max = Integer.parseInt(addPartMax.getText());
+            String companyName = flexTextField.getText();
+
+            Part outsourced = new Outsourced(id, name, price, stock, min, max, companyName);
+            Inventory.addPart(outsourced);
+        }
+
+
+
+
+        Parent addPartSaveParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
         Scene addPartSaveScene = new Scene(addPartSaveParent);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

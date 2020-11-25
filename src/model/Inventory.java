@@ -5,18 +5,18 @@ import javafx.collections.ObservableList;
 
 public class Inventory {
 
-    protected ObservableList<Part> allParts = FXCollections.observableArrayList();
-    protected ObservableList<Product> allProducts = FXCollections.observableArrayList();
+    protected static ObservableList<Part> allParts = FXCollections.observableArrayList();
+    protected static ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
-    public void addPart(Part newPart) {
+    public static void addPart(Part newPart) {
         allParts.add(newPart);
     }
 
-    public void addProduct(Product newProduct) {
+    public static void addProduct(Product newProduct) {
         allProducts.add(newProduct);
     }
 
-    public Part lookupPart(int partId) {
+    public static Part lookupPart(int partId) {
         for (int i = 0; i < allParts.size(); i++) {
             if (allParts.get(i).id == partId) {
                 return allParts.get(i);
@@ -25,7 +25,7 @@ public class Inventory {
         return null;
     }
 
-    public Product lookupProduct(int productId) {
+    public static Product lookupProduct(int productId) {
         for (int i = 0; i < allProducts.size(); i++) {
             if (allProducts.get(i).id == productId) {
                 return allProducts.get(i);
@@ -34,7 +34,7 @@ public class Inventory {
         return null;
     }
 
-    public ObservableList<Part> lookupPart(String partName) {
+    public static ObservableList<Part> lookupPart(String partName) {
 
         ObservableList<Part> partCopy = FXCollections.observableArrayList();
         for (int i = 0; i < allParts.size(); i++) {
@@ -45,7 +45,7 @@ public class Inventory {
         return partCopy;
     }
 
-    public ObservableList<Product> lookupProduct(String productName) {
+    public static ObservableList<Product> lookupProduct(String productName) {
 
         ObservableList<Product> productCopy = FXCollections.observableArrayList();
         for (int i = 0; i < allProducts.size(); i++) {
@@ -56,15 +56,15 @@ public class Inventory {
         return productCopy;
     }
 
-    public void updatePart(int index, Part selectedPart) {
+    public static void updatePart(int index, Part selectedPart) {
         allParts.set(index, selectedPart);
     }
 
-    public void updateProduct(int index, Product newProduct) {
+    public static void updateProduct(int index, Product newProduct) {
         allProducts.set(index, newProduct);
     }
 
-    public boolean deletePart(Part selectedPart) {
+    public static boolean deletePart(Part selectedPart) {
         while (true) {
             if (allParts.contains(selectedPart)) {
                 allParts.remove(selectedPart);
@@ -72,7 +72,7 @@ public class Inventory {
         }
     }
 
-    public boolean deleteProduct(Product selectedProduct) {
+    public static boolean deleteProduct(Product selectedProduct) {
         while (true) {
             if (allProducts.contains(selectedProduct)) {
                 allProducts.remove(selectedProduct);
@@ -80,7 +80,7 @@ public class Inventory {
         }
     }
 
-    public ObservableList<Part> getAllParts() {
+    public static ObservableList<Part> getAllParts() {
         ObservableList<Part> partsList = FXCollections.observableArrayList();
         for (int i = 0; i < allParts.size(); i++) {
             partsList.add(allParts.get(i));
@@ -88,7 +88,7 @@ public class Inventory {
         return partsList;
     }
 
-    public ObservableList<Product> getAllProducts() {
+    public static ObservableList<Product> getAllProducts() {
         ObservableList<Product> productsList = FXCollections.observableArrayList();
         for (int i = 0; i < allProducts.size(); i++) {
             productsList.add(allProducts.get(i));

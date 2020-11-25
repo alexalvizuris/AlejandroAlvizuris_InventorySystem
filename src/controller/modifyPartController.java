@@ -11,6 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Inventory;
+import model.Part;
 
 import java.io.IOException;
 
@@ -52,6 +54,7 @@ public class modifyPartController {
     @FXML
     private Button modifyPartCancel;
 
+
     public void inHouseModifyToggled(ActionEvent event) {
         if (inHouseModify.isSelected()) {
             flexLabel2.setText("Machine ID");
@@ -65,6 +68,8 @@ public class modifyPartController {
     }
 
     public void modifyPartSaveSelected(ActionEvent event) throws IOException {
+
+
         Parent modifyPartSaveParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
         Scene modifyPartSaveScene = new Scene(modifyPartSaveParent);
 

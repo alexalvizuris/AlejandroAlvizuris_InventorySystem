@@ -32,13 +32,10 @@
       <fx:define>
          <ToggleGroup fx:id="addPartToggleGroup" />
       </fx:define>
-      <RadioButton fx:id="inHouseAdd" layoutX="162.0" layoutY="90.0" mnemonicParsing="false" onAction="#addPartInHouseToggled" selected="true" text="In-House">
+      <RadioButton fx:id="inHouseAdd" layoutX="162.0" layoutY="90.0" mnemonicParsing="false" onAction="#addPartInHouseToggled" selected="true" text="In-House" toggleGroup="$addPartToggleGroup">
          <font>
             <Font name="Arial Bold" size="13.0" />
          </font>
-         <toggleGroup>
-            <ToggleGroup fx:id="addPartToggleGroup" />
-         </toggleGroup>
       </RadioButton>
       <RadioButton fx:id="outsourcedAdd" layoutX="280.0" layoutY="90.0" mnemonicParsing="false" onAction="#addPartOutsourceToggled" text="Outsourced" toggleGroup="$addPartToggleGroup">
          <font>

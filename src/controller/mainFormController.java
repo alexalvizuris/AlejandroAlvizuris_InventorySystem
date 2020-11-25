@@ -10,11 +10,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Inventory;
 import model.Part;
 import model.Product;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class mainFormController {
 
@@ -75,6 +79,27 @@ public class mainFormController {
     @FXML
     private Button mainExitButton;
 
+    public boolean search(int id) {
+        for (Part part: Inventory.getAllParts()) {
+            if (part.getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean update(int id, Part part) {
+        int i = 0;
+        for (Part selectedPart: Inventory.getAllParts()) {
+            i++;
+            if (selectedPart.getId() == id) {
+                Inventory.getAllParts().set(i, part);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void addPartButtonSelected(ActionEvent event) throws IOException {
         Parent addPartParent = FXMLLoader.load(getClass().getResource("/view/addPart.fxml"));
         Scene addPartScene = new Scene(addPartParent);
@@ -113,6 +138,30 @@ public class mainFormController {
 
         stage.setScene(modifyProductScene);
         stage.show();
+    }
+
+
+
+
+    public void initialize() {
+        partInventoryTable.setItems(Inventory.getAllParts());
+
+        partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        partPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        partInvColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+
+
+        productInventoryTable.setItems(Inventory.getAllProducts());
+
+        productIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        productPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        productInvColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+
+
+
+
     }
 
 

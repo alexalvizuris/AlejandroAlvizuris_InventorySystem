@@ -40,34 +40,34 @@ public class addProductController {
     private TextField addProductSearch;
 
     @FXML
-    private TableView<?> addProduct_PartTable;
+    private TableView<Part> addProduct_PartTable;
 
     @FXML
-    private TableColumn<?, ?> addProduct_IdColumn;
+    private TableColumn<Part, Integer> addProduct_IdColumn;
 
     @FXML
-    private TableColumn<?, ?> addProduct_NameColumn;
+    private TableColumn<Part, String> addProduct_NameColumn;
 
     @FXML
-    private TableColumn<?, ?> addProduct_InvColumn;
+    private TableColumn<Part, Integer> addProduct_InvColumn;
 
     @FXML
-    private TableColumn<?, ?> addProduct_PriceColumn;
+    private TableColumn<Part, Double> addProduct_PriceColumn;
 
     @FXML
-    private TableView<?> associatedPartTable;
+    private TableView<Part> associatedPartTable;
 
     @FXML
-    private TableColumn<?, ?> associatedPartId;
+    private TableColumn<Part, Integer> associatedPartId;
 
     @FXML
-    private TableColumn<?, ?> associatedPartName;
+    private TableColumn<Part, String> associatedPartName;
 
     @FXML
-    private TableColumn<?, ?> associatedPartInv;
+    private TableColumn<Part, Integer> associatedPartInv;
 
     @FXML
-    private TableColumn<?, ?> associatedPartPrice;
+    private TableColumn<Part, Double> associatedPartPrice;
 
     @FXML
     private Button addPartToProduct;
@@ -81,7 +81,11 @@ public class addProductController {
     @FXML
     private Button addProductCancel;
 
+    @FXML
     public void addProductSaveSelected(ActionEvent event) throws IOException {
+
+
+
         Parent addProductSaveParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
         Scene addProductSaveScene = new Scene(addProductSaveParent);
 
