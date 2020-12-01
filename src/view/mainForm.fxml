@@ -34,7 +34,7 @@
                             <children>
                                 <Button fx:id="addPartButton" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="56.0" text="Add" onAction="#addPartButtonSelected"/>
                                 <Button fx:id="modifyPartButton" mnemonicParsing="false" text="Modify" onAction="#modifyPartButtonSelected"/>
-                                <Button fx:id="deletePartButton" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="56.0" text="Delete" />
+                                <Button fx:id="deletePartButton" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="56.0" text="Delete" onAction="#deletePartButtonSelected"/>
                             </children>
                             <padding>
                                 <Insets bottom="5.0" right="14.0" />
@@ -65,7 +65,7 @@
                             <children>
                                 <Button fx:id="addProductButton" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="56.0" text="Add" onAction="#addProductButtonSelected"/>
                                 <Button fx:id="modifyProductButton" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" mnemonicParsing="false" prefWidth="56.0" text="Modify" onAction="#modifyProductButtonSelected"/>
-                                <Button fx:id="deleteProductButton" layoutX="65.0" layoutY="10.0" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="56.0" text="Delete" />
+                                <Button fx:id="deleteProductButton" layoutX="65.0" layoutY="10.0" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="56.0" text="Delete" onAction="#deleteProductButtonSelected" />
                             </children>
                             <padding>
                                 <Insets bottom="5.0" right="13.0" />

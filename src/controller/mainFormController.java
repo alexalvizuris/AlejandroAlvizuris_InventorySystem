@@ -1,15 +1,13 @@
 package controller;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Inventory;
@@ -79,26 +77,27 @@ public class mainFormController {
     @FXML
     private Button mainExitButton;
 
-    public boolean search(int id) {
-        for (Part part: Inventory.getAllParts()) {
-            if (part.getId() == id) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    public boolean search(int id) {
+//        for (Part part: Inventory.getAllParts()) {
+//            if (part.getId() == id) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    public boolean update(int id, Part part) {
+//        int i = 0;
+//        for (Part selectedPart: Inventory.getAllParts()) {
+//            i++;
+//            if (selectedPart.getId() == id) {
+//                Inventory.getAllParts().set(i, part);
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
-    public boolean update(int id, Part part) {
-        int i = 0;
-        for (Part selectedPart: Inventory.getAllParts()) {
-            i++;
-            if (selectedPart.getId() == id) {
-                Inventory.getAllParts().set(i, part);
-                return true;
-            }
-        }
-        return false;
-    }
 
     public void addPartButtonSelected(ActionEvent event) throws IOException {
         Parent addPartParent = FXMLLoader.load(getClass().getResource("/view/addPart.fxml"));
@@ -111,8 +110,15 @@ public class mainFormController {
     }
 
     public void modifyPartButtonSelected(ActionEvent event) throws IOException {
-        Parent modifyPartParent = FXMLLoader.load(getClass().getResource("/view/modifyPart.fxml"));
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/modifyPart.fxml"));
+        Parent modifyPartParent = loader.load();
+
         Scene modifyPartScene = new Scene(modifyPartParent);
+
+        modifyPartController control = loader.getController();
+        control.initPartData(partInventoryTable.getSelectionModel().getSelectedItem());
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -140,6 +146,28 @@ public class mainFormController {
         stage.show();
     }
 
+    public void searchInitiated(ActionEvent event) {
+
+    }
+
+    public void deletePartButtonSelected() {
+        ObservableList<Part> allParts, selectedPart;
+        allParts = partInventoryTable.getItems();
+        selectedPart = partInventoryTable.getSelectionModel().getSelectedItems();
+        for (Part part: selectedPart) {
+            allParts.remove(part);
+        }
+    }
+
+    public void deleteProductButtonSelected() {
+        ObservableList<Product> allProducts, selectedProduct;
+        allProducts = productInventoryTable.getItems();
+        selectedProduct = productInventoryTable.getSelectionModel().getSelectedItems();
+        for (Product product: selectedProduct) {
+            allProducts.remove(product);
+        }
+    }
+
 
 
 
@@ -158,6 +186,9 @@ public class mainFormController {
         productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         productPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         productInvColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+
+        partInventoryTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        productInventoryTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
 
 

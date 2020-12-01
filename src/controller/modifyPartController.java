@@ -11,7 +11,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.InHouse;
 import model.Inventory;
+import model.Outsourced;
 import model.Part;
 
 import java.io.IOException;
@@ -87,6 +89,29 @@ public class modifyPartController {
 
         stage.setScene(modifyPartCancelScene);
         stage.show();
+    }
+
+    public void initPartData(Part part) {
+
+
+            modifyPartId.setText(Integer.toString(part.getId()));
+            modifyPartName.setText(part.getName());
+            modifyPartPrice.setText(Double.toString(part.getPrice()));
+            modifyPartInv.setText(Integer.toString(part.getStock()));
+            modifyPartMax.setText(Integer.toString(part.getMax()));
+            modifyPartMin.setText(Integer.toString(part.getMin()));
+
+
+
+        if (part instanceof InHouse) {
+            flexLabel2.setText("Machine ID");
+            flexTextField2.setText(Integer.toString(((InHouse) part).getMachineId()));
+        }
+
+        if (part instanceof Outsourced) {
+            flexLabel2.setText("Company Name");
+            flexTextField2.setText(((Outsourced) part).getCompanyName());
+        }
     }
 
 
