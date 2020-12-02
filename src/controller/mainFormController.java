@@ -134,6 +134,8 @@ public class mainFormController {
 
     public void searchInitiated(ActionEvent event) {
 
+       // Inventory.lookupPart(searchPartField.getText());
+
     }
 
     public void deletePartButtonSelected() {
@@ -179,6 +181,11 @@ public class mainFormController {
 
 
 
+    }
+
+    public void exitButtonSelected(ActionEvent event) {
+        Stage stage = (Stage) mainExitButton.getScene().getWindow();
+        stage.close();
     }
 
 

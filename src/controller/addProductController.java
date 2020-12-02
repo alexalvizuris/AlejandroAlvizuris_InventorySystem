@@ -6,10 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Inventory;
 import model.Part;
@@ -85,7 +83,7 @@ public class addProductController {
     @FXML
     public void addProductSaveSelected(ActionEvent event) throws IOException {
 
-        int id = Integer.parseInt(addProductId.getText());
+        int id = Inventory.getAllProducts().size() + 1;
         String name = addProductName.getText();
         double price = Double.parseDouble(addProductPrice.getText());
         int stock = Integer.parseInt(addProductInv.getText());
@@ -114,6 +112,22 @@ public class addProductController {
 
         stage.setScene(addProductCancelScene);
         stage.show();
+    }
+
+    public void initialize() {
+        addProduct_PartTable.setItems(Inventory.getAllParts());
+
+        addProduct_PartTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        addProduct_IdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        addProduct_NameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        addProduct_InvColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        addProduct_PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+
+
+
+
     }
 
 }

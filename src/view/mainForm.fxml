@@ -29,7 +29,7 @@
                                 <Font name="Arial Bold" size="15.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="searchPartField" layoutX="236.0" layoutY="9.0" prefHeight="27.0" prefWidth="177.0" promptText="Search by Part ID or Name" />
+                        <TextField fx:id="searchPartField" layoutX="236.0" layoutY="9.0" prefHeight="27.0" prefWidth="177.0" promptText="Search by Part ID or Name" onAction="#searchInitiated"/>
                         <HBox alignment="BOTTOM_RIGHT" layoutX="111.0" layoutY="169.0" prefHeight="107.0" prefWidth="316.0" spacing="10.0">
                             <children>
                                 <Button fx:id="addPartButton" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="56.0" text="Add" onAction="#addPartButtonSelected"/>
@@ -80,6 +80,6 @@
                 <Font name="Arial Bold" size="17.0" />
             </font>
         </Label>
-        <Button fx:id="mainExitButton" layoutX="844.0" layoutY="359.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="93.0" text="Exit" />
+        <Button fx:id="mainExitButton" layoutX="844.0" layoutY="359.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="93.0" text="Exit" onAction="#exitButtonSelected"/>
     </children>
 </AnchorPane>

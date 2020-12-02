@@ -61,7 +61,7 @@ public class addPartController {
 
         if (inHouseAdd.isSelected()) {
             flexLabel.setText("Machine ID");
-            int id = Integer.parseInt(addPartId.getText());
+            int id = Inventory.getAllParts().size() + 1;
             String name = addPartName.getText();
             double price = Double.parseDouble(addPartPrice.getText());
             int stock = Integer.parseInt(addPartInv.getText());
@@ -79,7 +79,7 @@ public class addPartController {
 
             flexLabel.setText("Company Name");
 
-            int id = Integer.parseInt(addPartId.getText());
+            int id = Inventory.getAllParts().size() + 1;
             String name = addPartName.getText();
             double price = Double.parseDouble(addPartPrice.getText());
             int stock = Integer.parseInt(addPartInv.getText());

@@ -11,7 +11,7 @@
 <AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.addPartController">
    <children>
       <TextField fx:id="addPartMin" layoutX="367.0" layoutY="330.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="125.0" />
-      <TextField fx:id="addPartId" layoutX="162.0" layoutY="155.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="125.0" />
+      <TextField fx:id="addPartId" layoutX="162.0" layoutY="155.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="125.0" disable="true" promptText="Auto-Generated"/>
       <TextField fx:id="addPartName" layoutX="162.0" layoutY="197.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="125.0" />
       <TextField fx:id="addPartInv" layoutX="162.0" layoutY="244.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="125.0" />
       <TextField fx:id="addPartPrice" layoutX="162.0" layoutY="287.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="125.0" />
