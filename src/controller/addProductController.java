@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Inventory;
 import model.Part;
 import model.Product;
 
@@ -83,6 +84,16 @@ public class addProductController {
 
     @FXML
     public void addProductSaveSelected(ActionEvent event) throws IOException {
+
+        int id = Integer.parseInt(addProductId.getText());
+        String name = addProductName.getText();
+        double price = Double.parseDouble(addProductPrice.getText());
+        int stock = Integer.parseInt(addProductInv.getText());
+        int max = Integer.parseInt(addProductMax.getText());
+        int min = Integer.parseInt(addProductMin.getText());
+
+        Product product = new Product(id, name, price, stock, max, min);
+        Inventory.addProduct(product);
 
 
 

@@ -71,6 +71,38 @@ public class modifyPartController {
 
     public void modifyPartSaveSelected(ActionEvent event) throws IOException {
 
+        if (inHouseModify.isSelected()) {
+            flexLabel2.setText("Machine ID");
+            int id = Integer.parseInt(modifyPartId.getText());
+            String name = modifyPartName.getText();
+            double price = Double.parseDouble(modifyPartPrice.getText());
+            int stock = Integer.parseInt(modifyPartInv.getText());
+            int min = Integer.parseInt(modifyPartMin.getText());
+            int max = Integer.parseInt(modifyPartMax.getText());
+            int machineID = Integer.parseInt(flexTextField2.getText());
+
+            Part inHouse = new InHouse(id, name, price, stock, min, max, machineID);
+            Inventory.updatePart(0, inHouse);
+
+        }
+
+
+        if (outsourcedModify.isSelected()) {
+
+            flexLabel2.setText("Company Name");
+
+            int id = Integer.parseInt(modifyPartId.getText());
+            String name = modifyPartName.getText();
+            double price = Double.parseDouble(modifyPartPrice.getText());
+            int stock = Integer.parseInt(modifyPartInv.getText());
+            int min = Integer.parseInt(modifyPartMin.getText());
+            int max = Integer.parseInt(modifyPartMax.getText());
+            String companyName = flexTextField2.getText();
+
+            Part outsourced = new Outsourced(id, name, price, stock, min, max, companyName);
+            Inventory.updatePart(0, outsourced);
+        }
+
 
         Parent modifyPartSaveParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
         Scene modifyPartSaveScene = new Scene(modifyPartSaveParent);
@@ -106,11 +138,13 @@ public class modifyPartController {
         if (part instanceof InHouse) {
             flexLabel2.setText("Machine ID");
             flexTextField2.setText(Integer.toString(((InHouse) part).getMachineId()));
+            inHouseModify.setSelected(true);
         }
 
         if (part instanceof Outsourced) {
             flexLabel2.setText("Company Name");
             flexTextField2.setText(((Outsourced) part).getCompanyName());
+            outsourcedModify.setSelected(true);
         }
     }
 

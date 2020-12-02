@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Product;
 
 import java.io.IOException;
 
@@ -97,6 +98,17 @@ public class modifyProductController {
 
         stage.setScene(modifyProductCancelScene);
         stage.show();
+    }
+
+    public void initProductData(Product product) {
+
+        modifyProductId.setText(Integer.toString(product.getId()));
+        modifyProductName.setText(product.getName());
+        modifyProductPrice.setText(Double.toString(product.getPrice()));
+        modifyProductInv.setText(Integer.toString(product.getStock()));
+        modifyProductMax.setText(Integer.toString(product.getMax()));
+        modifyProductMin.setText(Integer.toString(product.getMin()));
+
     }
 
 }

@@ -77,26 +77,6 @@ public class mainFormController {
     @FXML
     private Button mainExitButton;
 
-//    public boolean search(int id) {
-//        for (Part part: Inventory.getAllParts()) {
-//            if (part.getId() == id) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    public boolean update(int id, Part part) {
-//        int i = 0;
-//        for (Part selectedPart: Inventory.getAllParts()) {
-//            i++;
-//            if (selectedPart.getId() == id) {
-//                Inventory.getAllParts().set(i, part);
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 
 
     public void addPartButtonSelected(ActionEvent event) throws IOException {
@@ -137,11 +117,17 @@ public class mainFormController {
     }
 
     public void modifyProductButtonSelected(ActionEvent event) throws IOException {
-        Parent modifyProductParent = FXMLLoader.load(getClass().getResource("/view/modifyProduct.fxml"));
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/modifyProduct.fxml"));
+        Parent modifyProductParent = loader.load();
+
         Scene modifyProductScene = new Scene(modifyProductParent);
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        modifyProductController control = loader.getController();
+        control.initProductData(productInventoryTable.getSelectionModel().getSelectedItem());
 
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(modifyProductScene);
         stage.show();
     }
