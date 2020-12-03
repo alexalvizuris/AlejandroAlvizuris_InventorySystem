@@ -29,7 +29,7 @@
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="addProductSearch" layoutX="673.0" layoutY="31.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="190.0" promptText="Search by Part ID or Name" />
+            <TextField fx:id="addProductSearch" layoutX="673.0" layoutY="31.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="190.0" promptText="Search by Part ID or Name" onAction="#searchParts"/>
             <TableView fx:id="addProduct_PartTable" layoutX="455.0" layoutY="75.0" prefHeight="181.0" prefWidth="409.0">
               <columns>
                 <TableColumn fx:id="addProduct_IdColumn" prefWidth="57.0" text="Part ID" />

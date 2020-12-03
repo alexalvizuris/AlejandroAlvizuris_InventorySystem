@@ -132,10 +132,37 @@ public class mainFormController {
         stage.show();
     }
 
-    public void searchInitiated(ActionEvent event) {
+    public void searchParts(ActionEvent event) {
 
-       // Inventory.lookupPart(searchPartField.getText());
+       String searching = searchPartField.getText();
+       ObservableList<Part> partsCopied = Inventory.lookupPart(searching);
 
+       if (partsCopied.size() == 0) {
+           int idNum = Integer.parseInt(searching);
+           Part part = Inventory.lookupPart(idNum);
+           if (part != null) {
+               partsCopied.add(part);
+           }
+       }
+
+       partInventoryTable.setItems(partsCopied);
+
+    }
+
+    public void searchProducts(ActionEvent event) {
+
+        String searching = searchProductField.getText();
+        ObservableList<Product> productsCopied = Inventory.lookupProduct(searching);
+
+        if (productsCopied.size() == 0) {
+            int idNum = Integer.parseInt(searching);
+            Product product = Inventory.lookupProduct(idNum);
+            if (product != null) {
+                productsCopied.add(product);
+            }
+        }
+
+        productInventoryTable.setItems(productsCopied);
     }
 
     public void deletePartButtonSelected() {

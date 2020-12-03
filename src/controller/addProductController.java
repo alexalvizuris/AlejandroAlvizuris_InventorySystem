@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -112,6 +113,21 @@ public class addProductController {
 
         stage.setScene(addProductCancelScene);
         stage.show();
+    }
+
+    public void searchParts() {
+        String searching = addProductSearch.getText();
+        ObservableList<Part> partsCopied = Inventory.lookupPart(searching);
+
+        if (partsCopied.size() == 0) {
+            int idNum = Integer.parseInt(searching);
+            Part part = Inventory.lookupPart(idNum);
+            if (part != null) {
+                partsCopied.add(part);
+            }
+        }
+
+        addProduct_PartTable.setItems(partsCopied);
     }
 
     public void initialize() {
