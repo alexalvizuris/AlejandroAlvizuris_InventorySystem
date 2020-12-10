@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +18,9 @@ import model.Product;
 import java.io.IOException;
 
 public class addProductController {
+
+    @FXML
+    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
     @FXML
     private TextField addProductName;
@@ -130,6 +134,16 @@ public class addProductController {
         addProduct_PartTable.setItems(partsCopied);
     }
 
+    public void addPartToAssociatedParts(ActionEvent event) throws IOException {
+
+        associatedParts.add(addProduct_PartTable.getSelectionModel().getSelectedItem());
+
+    }
+
+    public void removeAssociatedPart() {
+
+    }
+
     public void initialize() {
         addProduct_PartTable.setItems(Inventory.getAllParts());
 
@@ -139,6 +153,15 @@ public class addProductController {
         addProduct_NameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         addProduct_InvColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         addProduct_PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        associatedPartTable.setItems(associatedParts);
+
+        associatedPartTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        associatedPartId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        associatedPartName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        associatedPartPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        associatedPartInv.setCellValueFactory(new PropertyValueFactory<>("stock"));
+
 
 
 

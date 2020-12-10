@@ -46,7 +46,7 @@
                   <TableColumn fx:id="associatedPartPrice" prefWidth="135.0" text="Price/ Cost per Unit" />
                </columns>
             </TableView>
-            <Button fx:id="addPartToProduct" layoutX="789.0" layoutY="265.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="75.0" text="Add" />
+            <Button fx:id="addPartToProduct" layoutX="789.0" layoutY="265.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="75.0" text="Add" onAction="#addPartToAssociatedParts"/>
             <Button fx:id="removeAssociatedPart" layoutX="714.0" layoutY="498.0" mnemonicParsing="false" text="Remove Associated Part" />
             <Button fx:id="addProductSave" layoutX="58.0" layoutY="368.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="75.0" text="Save" onAction="#addProductSaveSelected" />
             <Button fx:id="addProductCancel" layoutX="163.0" layoutY="368.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefWidth="75.0" text="Cancel" onAction="#addProductCancelSelected"/>
