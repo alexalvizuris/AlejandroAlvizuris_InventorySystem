@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +18,9 @@ import model.Product;
 import java.io.IOException;
 
 public class modifyProductController {
+
+    @FXML
+    private ObservableList<Part> associatedPartList = FXCollections.observableArrayList();
 
     @FXML
     private TextField modifyProductName;
@@ -83,7 +87,7 @@ public class modifyProductController {
 
     public void modifyProductSaveSelected(ActionEvent event) throws IOException {
 
-        int id = Inventory.getAllProducts().size() + 1;
+        int id = Inventory.getAllProducts().size() + 2;
         String name = modifyProductName.getText();
         double price = Double.parseDouble(modifyProductPrice.getText());
         int stock = Integer.parseInt(modifyProductInv.getText());
@@ -91,7 +95,7 @@ public class modifyProductController {
         int min = Integer.parseInt(modifyProductMin.getText());
 
         Product product = new Product(id, name, price, stock, max, min);
-        Inventory.updateProduct(0, product);
+        Inventory.updateProduct(id - 1, product);
 
         Parent modifyProductSaveParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
         Scene modifyProductSaveScene = new Scene(modifyProductSaveParent);
@@ -127,6 +131,21 @@ public class modifyProductController {
         modifyProduct_PartTable.setItems(partsCopied);
     }
 
+    public void addPartToAssociatedParts() {
+
+        associatedPartList.add(modifyProduct_PartTable.getSelectionModel().getSelectedItem());
+
+    }
+
+    public void removeAssociatedPart() {
+        ObservableList<Part> allParts, selectedPart;
+        allParts = modify_AssociatedPartTable.getItems();
+        selectedPart = modify_AssociatedPartTable.getSelectionModel().getSelectedItems();
+        for (Part part: selectedPart) {
+            allParts.remove(part);
+        }
+    }
+
     public void initProductData(Product product) {
 
         modifyProductId.setText(Integer.toString(product.getId()));
@@ -147,6 +166,9 @@ public class modifyProductController {
         ModifyProduct_PartName.setCellValueFactory(new PropertyValueFactory<>("name"));
         modifyProduct_PartInv.setCellValueFactory(new PropertyValueFactory<>("stock"));
         modifyProduct_PartPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        modify_AssociatedPartTable.setItems(associatedPartList);
+
 
     }
 

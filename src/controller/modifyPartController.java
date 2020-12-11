@@ -83,7 +83,9 @@ public class modifyPartController {
             int machineID = Integer.parseInt(flexTextField2.getText());
 
             Part inHouse = new InHouse(id, name, price, stock, min, max, machineID);
-            Inventory.updatePart(0, inHouse);
+
+            Inventory.updatePart(id - 1, inHouse);
+
 
         }
 
@@ -101,7 +103,10 @@ public class modifyPartController {
             String companyName = flexTextField2.getText();
 
             Part outsourced = new Outsourced(id, name, price, stock, min, max, companyName);
-            Inventory.updatePart(0, outsourced);
+
+            Inventory.updatePart(id - 1, outsourced);
+
+
         }
 
 

@@ -141,7 +141,12 @@ public class addProductController {
     }
 
     public void removeAssociatedPart() {
-
+        ObservableList<Part> allParts, selectedPart;
+        allParts = associatedPartTable.getItems();
+        selectedPart = associatedPartTable.getSelectionModel().getSelectedItems();
+        for (Part part: selectedPart) {
+            allParts.remove(part);
+        }
     }
 
     public void initialize() {
