@@ -87,7 +87,7 @@ public class modifyProductController {
 
     public void modifyProductSaveSelected(ActionEvent event) throws IOException {
 
-        int id = Inventory.getAllProducts().size() + 2;
+        int id = Integer.parseInt(modifyProductId.getText());
         String name = modifyProductName.getText();
         double price = Double.parseDouble(modifyProductPrice.getText());
         int stock = Integer.parseInt(modifyProductInv.getText());
@@ -95,6 +95,11 @@ public class modifyProductController {
         int min = Integer.parseInt(modifyProductMin.getText());
 
         Product product = new Product(id, name, price, stock, max, min);
+        if (associatedPartList.size() > 0 ) {
+            for (int i = 0; i < associatedPartList.size(); i++) {
+                product.addAssociatedPart(associatedPartList.get(i));
+            }
+        }
         Inventory.updateProduct(id - 1, product);
 
         Parent modifyProductSaveParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
@@ -155,9 +160,6 @@ public class modifyProductController {
         modifyProductMax.setText(Integer.toString(product.getMax()));
         modifyProductMin.setText(Integer.toString(product.getMin()));
 
-    }
-
-    public void initialize() {
         modifyProduct_PartTable.setItems(Inventory.getAllParts());
 
         modifyProduct_PartTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -167,9 +169,18 @@ public class modifyProductController {
         modifyProduct_PartInv.setCellValueFactory(new PropertyValueFactory<>("stock"));
         modifyProduct_PartPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+        associatedPartList = product.getAllAssociatedParts();
         modify_AssociatedPartTable.setItems(associatedPartList);
 
+        modify_AssociatedPartTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        modify_AssociatedPartId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        modify_AssociatedPartName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        modify_AssociatedPartInv.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        modify_AssociatedPartPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
 
     }
+
+
 
 }

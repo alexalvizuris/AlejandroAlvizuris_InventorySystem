@@ -96,7 +96,14 @@ public class addProductController {
         int min = Integer.parseInt(addProductMin.getText());
 
         Product product = new Product(id, name, price, stock, max, min);
+        if (associatedParts.size() > 0 ) {
+            for (int i = 0; i < associatedParts.size(); i++) {
+                product.addAssociatedPart(associatedParts.get(i));
+            }
+        }
         Inventory.addProduct(product);
+
+
 
 
 
