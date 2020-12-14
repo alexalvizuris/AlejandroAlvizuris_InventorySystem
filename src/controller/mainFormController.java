@@ -19,6 +19,9 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/***
+ * Controller for the Main Form
+ */
 public class mainFormController {
 
     @FXML
@@ -79,7 +82,11 @@ public class mainFormController {
     private Button mainExitButton;
 
 
-// Selecting this will switch screens to the Add Part screen
+    /***
+     * Selecting this will switch screens to the Add Part screen
+     * @param event variable created to initiate creating a new Part, switches over to Add Part screen
+     * @throws IOException
+     */
     public void addPartButtonSelected(ActionEvent event) throws IOException {
         Parent addPartParent = FXMLLoader.load(getClass().getResource("/view/addPart.fxml"));
         Scene addPartScene = new Scene(addPartParent);
@@ -90,7 +97,12 @@ public class mainFormController {
         stage.show();
     }
 
-// Selecting this will switch screens to the Modify Part screen and populate the selected Part's attributes
+
+    /***
+     * Selecting this will switch screens to the Modify Part screen and populate the selected Part's attributes
+     * @param event variable created to initiate switching over to the Modify Part screen as well as populating the screen
+     * @throws IOException when a Part has not been selected prior to selecting the Modify button
+     */
     public void modifyPartButtonSelected(ActionEvent event) throws IOException {
     try {
         FXMLLoader loader = new FXMLLoader();
@@ -114,7 +126,12 @@ public class mainFormController {
     }
     }
 
-// Selecting this will switch screens to the Add Products screen
+
+    /***
+     * Selecting this will switch screens to the Add Products screen
+     * @param event variable created to initiate creating a new Product, switches over to Add Product screen
+     * @throws IOException
+     */
     public void addProductButtonSelected(ActionEvent event) throws IOException {
         Parent addProductParent = FXMLLoader.load(getClass().getResource("/view/addProduct.fxml"));
         Scene addProductScene = new Scene(addProductParent);
@@ -126,7 +143,11 @@ public class mainFormController {
     }
 
 
-// Selecting this will switch screens to the Modify Products screen and populate the selected Product's attributes
+    /***
+     * Selecting this will switch screens to the Modify Products screen and populate the selected Product's attributes
+     * @param event variable created to switch to Modify Product screen as well as populating the screen
+     * @throws IOException when a Product has not been selected prior to selecting the Modify button
+     */
     public void modifyProductButtonSelected(ActionEvent event) throws IOException {
     try {
         FXMLLoader loader = new FXMLLoader();
@@ -149,8 +170,13 @@ public class mainFormController {
     }
     }
 
-// Typing alphabetical or numerical text here will filter the Parts Table
-    public void searchParts(ActionEvent event) {
+
+    /***
+     * Typing alphabetical or numerical text here will filter the Parts Table
+     * @param event variable created to filter the Parts Table by what ever is typed into the text field
+     * @throws IOException when characters are input which are not numbers or letters from the alphabet
+     */
+    public void searchParts(ActionEvent event) throws IOException {
     try {
         String searching = searchPartField.getText();
         ObservableList<Part> partsCopied = Inventory.lookupPart(searching);
@@ -170,11 +196,14 @@ public class mainFormController {
         alert.setContentText("Please search using correct values.");
         alert.showAndWait();
     }
-
     }
 
-// Typing alphabetical or numerical text here will filter the Products Table
-    public void searchProducts(ActionEvent event) {
+    /***
+     * Typing alphabetical or numerical text here will filter the Products Table
+     * @param event created to filter the Products Table by what ever is typed into the text field
+     * @throws IOException when characters are input which are not numbers or letters from the alphabet
+     */
+    public void searchProducts(ActionEvent event) throws  IOException {
     try {
         String searching = searchProductField.getText();
         ObservableList<Product> productsCopied = Inventory.lookupProduct(searching);
@@ -196,7 +225,9 @@ public class mainFormController {
     }
     }
 
-// Selecting this will delete a part from inventory
+    /***
+     * Selecting this will delete a part from inventory
+     */
     public void deletePartButtonSelected() {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You are deleting an item from Inventory. Continue?");
@@ -213,7 +244,10 @@ public class mainFormController {
         }
     }
 
-// Selecting this will delete a product from Inventory
+
+    /***
+     * Selecting this will delete a product from Inventory
+     */
     public void deleteProductButtonSelected() {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You are deleting an item from Inventory. Continue?");
@@ -231,8 +265,9 @@ public class mainFormController {
     }
 
 
-
-// This initializes the items in the Parts Table and Products Table, as well as the associated columns
+    /***
+     * This initializes the items in the Parts Table and Products Table, as well as the associated columns
+     */
     public void initialize() {
         partInventoryTable.setItems(Inventory.getAllParts());
 
@@ -255,7 +290,10 @@ public class mainFormController {
 
 
 
-//Selecting this will exit the program
+    /***
+     * Selecting this will exit the program
+     * @param event variable created to terminate the program
+     */
     public void exitButtonSelected(ActionEvent event) {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You are now EXITING the program. Continue?");

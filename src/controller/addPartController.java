@@ -16,6 +16,9 @@ import model.Part;
 import java.io.IOException;
 import java.util.Optional;
 
+/***
+ * Controller for the Add Part screen
+ */
 public class addPartController {
 
     @FXML
@@ -55,11 +58,15 @@ public class addPartController {
     private Button addPartCancel;
 
 
-// Selecting this will add the Part to the Part Table, and switch screens to the Main Form screen
+    /***
+     * Selecting this will add the Part to the Inventory, and switch screens to the Main Form screen
+     * @param event variable created to initiate the save method in the Add Part screen
+     * @throws IOException when criteria has not been met to fulfil all requirements to create a new Part
+     */
     @FXML
     public void addPartSaveSelected(ActionEvent event) throws IOException {
 
-// This takes in user input and associates the input with the Part being created
+    try {
         if (inHouseAdd.isSelected()) {
             flexLabel.setText("Machine ID");
             int id = Inventory.getAllParts().size() + 1;
@@ -69,6 +76,31 @@ public class addPartController {
             int min = Integer.parseInt(addPartMin.getText());
             int max = Integer.parseInt(addPartMax.getText());
             int machineID = Integer.parseInt(flexTextField.getText());
+
+            if (name.isEmpty() || name == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("An Error has occurred");
+                alert.setContentText("Please use a valid input to name the part.");
+                alert.showAndWait();
+                return;
+            }
+
+            if (stock > max || stock < min) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("An Error has occurred");
+                alert.setContentText("The Inventory does not meet the amount of parts required. Please try again.");
+                alert.showAndWait();
+                return;
+            }
+
+            if (max < min) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("An Error has occurred");
+                alert.setContentText("The maximum amount of parts does not meet the minimum amount allowed. Please try again.");
+                alert.showAndWait();
+                return;
+            }
+
 
             Part inHouse = new InHouse(id, name, price, stock, min, max, machineID);
             Inventory.addPart(inHouse);
@@ -87,6 +119,29 @@ public class addPartController {
             int max = Integer.parseInt(addPartMax.getText());
             String companyName = flexTextField.getText();
 
+            if (name.isEmpty() || name == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("An Error has occurred");
+                alert.setContentText("Please use a valid input to name the part.");
+                alert.showAndWait();
+                return;
+            }
+
+            if (stock > max || stock < min) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("An Error has occurred");
+                alert.setContentText("The Inventory does not meet the amount of parts required. Please try again.");
+                alert.showAndWait();
+                return;
+            }
+
+            if (max < min) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("An Error has occurred");
+                alert.setContentText("The maximum amount of parts does not meet the minimum amount allowed. Please try again.");
+                return;
+            }
+
             Part outsourced = new Outsourced(id, name, price, stock, min, max, companyName);
             Inventory.addPart(outsourced);
 
@@ -100,11 +155,22 @@ public class addPartController {
 
         stage.setScene(addPartSaveScene);
         stage.show();
+    } catch (Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("An Error has occurred");
+        alert.setContentText("Please review your input and try again.");
+        alert.showAndWait();
+    }
 
     }
 
 
-// Selecting this will erase the input fields, and switch screens to the Main Form screen
+
+    /***
+     * Selecting this will erase the input fields, and switch screens to the Main Form screen
+     * @param event variable created to opt out of creating a new Part, and switch screens back to the Main Form
+     * @throws IOException
+     */
     public void addPartCancelSelected(ActionEvent event) throws IOException {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "No data will be saved. Continue?");
@@ -123,7 +189,10 @@ public class addPartController {
     }
 
 
-// Selecting this will ensure the part is associated with the InHouse parts
+    /***
+     * Selecting this will ensure the part is associated with the InHouse parts
+     * @param event variable created to switch the flex label to 'Machine ID'
+     */
     public void addPartInHouseToggled(ActionEvent event) {
         if (inHouseAdd.isSelected()) {
             flexLabel.setText("Machine ID");
@@ -131,7 +200,10 @@ public class addPartController {
     }
 
 
-// Selecting this will ensure the part is associated with the Outsourced parts
+    /***
+     * Selecting this will ensure the part is associated with the Outsourced parts
+     * @param event variable created to switch the flex label to 'Company Name'
+     */
     public void addPartOutsourceToggled(ActionEvent event) {
         if (outsourcedAdd.isSelected()) {
             flexLabel.setText("Company Name");

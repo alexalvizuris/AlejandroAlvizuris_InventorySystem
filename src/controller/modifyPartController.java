@@ -16,6 +16,9 @@ import model.Part;
 import java.io.IOException;
 import java.util.Optional;
 
+/***
+ * Controller for the Modify Part screen
+ */
 public class modifyPartController {
 
     @FXML
@@ -55,23 +58,14 @@ public class modifyPartController {
     private Button modifyPartCancel;
 
 
-// These action events adjust the flex label to correlate to either InHouse or Outsourced
-    public void inHouseModifyToggled(ActionEvent event) {
-        if (inHouseModify.isSelected()) {
-            flexLabel2.setText("Machine ID");
-        }
-    }
-
-    public void outsourcedModifyToggled(ActionEvent event) {
-        if (outsourcedModify.isSelected()) {
-            flexLabel2.setText("Company Name");
-        }
-    }
-
-
-// Selecting this will update the attributes to the selected Part, and switch screens to the Main Form screen
+    /***
+     * Selecting this will update the attributes to the selected Part, and switch screens to the Main Form screen
+     * @param event variable created to initiate the save method on the Modify Part screen
+     * @throws IOException when criteria had not been met to fulfil all requirements to create a new Part
+     */
     public void modifyPartSaveSelected(ActionEvent event) throws IOException {
 
+    try {
         if (inHouseModify.isSelected()) {
             flexLabel2.setText("Machine ID");
 
@@ -83,10 +77,32 @@ public class modifyPartController {
             int max = Integer.parseInt(modifyPartMax.getText());
             int machineID = Integer.parseInt(flexTextField2.getText());
 
+            if (name.isEmpty() || name == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("An Error has occurred");
+                alert.setContentText("Please use a valid input to name the part.");
+                alert.showAndWait();
+                return;
+            }
+
+            if (stock > max || stock < min) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("An Error has occurred");
+                alert.setContentText("The Inventory does not meet the amount of parts required. Please try again.");
+                alert.showAndWait();
+                return;
+            }
+
+            if (max < min) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("An Error has occurred");
+                alert.setContentText("The maximum amount of parts does not meet the minimum amount allowed. Please try again.");
+                return;
+            }
+
             Part inHouse = new InHouse(id, name, price, stock, min, max, machineID);
 
             Inventory.updatePart(id - 1, inHouse);
-
 
         }
 
@@ -103,13 +119,35 @@ public class modifyPartController {
             int max = Integer.parseInt(modifyPartMax.getText());
             String companyName = flexTextField2.getText();
 
+            if (name.isEmpty() || name == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("An Error has occurred");
+                alert.setContentText("Please use a valid input to name the part.");
+                alert.showAndWait();
+                return;
+            }
+
+            if (stock > max || stock < min) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("An Error has occurred");
+                alert.setContentText("The Inventory does not meet the amount of parts required. Please try again.");
+                alert.showAndWait();
+                return;
+            }
+
+            if (max < min) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("An Error has occurred");
+                alert.setContentText("The maximum amount of parts does not meet the minimum amount allowed. Please try again.");
+                return;
+            }
+
             Part outsourced = new Outsourced(id, name, price, stock, min, max, companyName);
 
             Inventory.updatePart(id - 1, outsourced);
 
 
         }
-
 
         Parent modifyPartSaveParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
         Scene modifyPartSaveScene = new Scene(modifyPartSaveParent);
@@ -118,10 +156,20 @@ public class modifyPartController {
 
         stage.setScene(modifyPartSaveScene);
         stage.show();
+    } catch (Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("An Error has occurred");
+        alert.setContentText("Please review your input and try again.");
+        alert.showAndWait();
+    }
     }
 
 
-// Selecting this will erase the input fields, and switch screens to the Main Form screen
+    /***
+     * Selecting this will erase the input fields, and switch screens to the Main Form screen
+     * @param event variable created to opt out of modifying the selected Part, and switch screens back to the Main Form
+     * @throws IOException
+     */
     public void  modifyPartCancelSelected(ActionEvent event) throws IOException {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "No data will be saved. Continue?");
@@ -139,7 +187,32 @@ public class modifyPartController {
         }
     }
 
-// This initializes the data for the Part being modified
+
+    /***
+     * Selecting this will ensure the part is associated with the InHouse parts
+     * @param event variable created to switch the flex label to 'Machine ID'
+     */
+    public void inHouseModifyToggled(ActionEvent event) {
+        if (inHouseModify.isSelected()) {
+            flexLabel2.setText("Machine ID");
+        }
+    }
+
+    /***
+     * Selecting this will ensure the part is associated with the Outsourced parts
+     * @param event variable created to switch the flex label to 'Company Name'
+     */
+    public void outsourcedModifyToggled(ActionEvent event) {
+        if (outsourcedModify.isSelected()) {
+            flexLabel2.setText("Company Name");
+        }
+    }
+
+
+    /***
+     * This initializes the data for the Part being modified
+     * @param part variable created to populate the text fields with the selected Part's attributes
+     */
     public void initPartData(Part part) {
 
             modifyPartId.setText(Integer.toString(part.getId()));
@@ -148,8 +221,6 @@ public class modifyPartController {
             modifyPartInv.setText(Integer.toString(part.getStock()));
             modifyPartMax.setText(Integer.toString(part.getMax()));
             modifyPartMin.setText(Integer.toString(part.getMin()));
-
-
 
         if (part instanceof InHouse) {
             flexLabel2.setText("Machine ID");

@@ -16,7 +16,11 @@ import model.Part;
 import model.Product;
 
 import java.io.IOException;
+import java.util.Optional;
 
+/***
+ * Controller for the Modify Product Screen
+ */
 public class modifyProductController {
 
     @FXML
@@ -85,8 +89,15 @@ public class modifyProductController {
     @FXML
     private Button modifyProductCancel;
 
+
+    /***
+     * Selecting this will modify the Product and save the changes to the Inventory, and switch back to the Main Form screen
+     * @param event variable created to initiate the save method in the Modify Product screen
+     * @throws IOException when criteria has not been met to fulfil all requirements to create a new Product
+     */
     public void modifyProductSaveSelected(ActionEvent event) throws IOException {
 
+    try {
         int id = Integer.parseInt(modifyProductId.getText());
         String name = modifyProductName.getText();
         double price = Double.parseDouble(modifyProductPrice.getText());
@@ -94,12 +105,48 @@ public class modifyProductController {
         int max = Integer.parseInt(modifyProductMax.getText());
         int min = Integer.parseInt(modifyProductMin.getText());
 
+        if (name.isEmpty() || name == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("Please use a valid input to name the product.");
+            alert.showAndWait();
+            return;
+        }
+
+        if (stock > max || stock < min) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("The Inventory does not meet the amount of products required. Please try again.");
+            alert.showAndWait();
+            return;
+        }
+
+        if (max < min) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("The maximum amount of products does not meet the minimum amount allowed. Please try again.");
+            return;
+        }
+
         Product product = new Product(id, name, price, stock, max, min);
-        if (associatedPartList.size() > 0 ) {
+
+        double count = 0;
+
+        if (associatedPartList.size() > 0) {
             for (int i = 0; i < associatedPartList.size(); i++) {
                 product.addAssociatedPart(associatedPartList.get(i));
+                count += associatedPartList.get(i).getPrice();
             }
         }
+
+        if (price < count) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("The price of the parts associated with this product exceed the price of the product. Please adjust this product's price.");
+            alert.showAndWait();
+            return;
+        }
+
         Inventory.updateProduct(id - 1, product);
 
         Parent modifyProductSaveParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
@@ -109,19 +156,44 @@ public class modifyProductController {
 
         stage.setScene(modifyProductSaveScene);
         stage.show();
+    } catch (Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("An Error has occurred");
+        alert.setContentText("Please review your input and try again.");
+        alert.showAndWait();
+    }
     }
 
+    /***
+     * Selecting this will opt out of modifying the Product, and switch screens to the Main Form screen
+     * @param event variable created to opt out of creating a new Product, and switch screens back to the Main Form
+     * @throws IOException
+     */
     public void modifyProductCancelSelected(ActionEvent event) throws IOException {
-        Parent modifyProductCancelParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
-        Scene modifyProductCancelScene = new Scene(modifyProductCancelParent);
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "No data will be saved. Continue?");
+        Optional<ButtonType> selectedButton = alert.showAndWait();
 
-        stage.setScene(modifyProductCancelScene);
-        stage.show();
+        if (selectedButton.isPresent() && selectedButton.get() == ButtonType.OK) {
+
+            Parent modifyProductCancelParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
+            Scene modifyProductCancelScene = new Scene(modifyProductCancelParent);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.setScene(modifyProductCancelScene);
+            stage.show();
+        }
     }
 
-    public void searchParts() {
+    /***
+     * Typing alphabetical or numerical text here will filter the Parts Table
+     * @param event variable created to filter the Parts Table by what ever is typed into the text field
+     * @throws IOException when characters are input which are not numbers or letters from the alphabet
+     */
+    public void searchParts(ActionEvent event) throws IOException {
+
+    try {
         String searching = modifyProductSearch.getText();
         ObservableList<Part> partsCopied = Inventory.lookupPart(searching);
 
@@ -134,23 +206,55 @@ public class modifyProductController {
         }
 
         modifyProduct_PartTable.setItems(partsCopied);
+    } catch (Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("An Error has occurred");
+        alert.setContentText("Please search using correct values.");
+        alert.showAndWait();
+    }
     }
 
-    public void addPartToAssociatedParts() {
+    /***
+     * Adds selected Part to the Associated Parts Table
+     * @param event variable created to add selected Part to Associated Parts
+     */
+    public void addPartToAssociatedParts(ActionEvent event) {
 
         associatedPartList.add(modifyProduct_PartTable.getSelectionModel().getSelectedItem());
 
     }
 
-    public void removeAssociatedPart() {
-        ObservableList<Part> allParts, selectedPart;
-        allParts = modify_AssociatedPartTable.getItems();
-        selectedPart = modify_AssociatedPartTable.getSelectionModel().getSelectedItems();
-        for (Part part: selectedPart) {
-            allParts.remove(part);
+
+    /***
+     * Removes Parts from the Associated Parts Table
+     * @param event variable created to remove Parts from the Associated Parts Table
+     * @throws IOException if the Remove Associated Part button is selected without selecting a Part to remove
+     */
+    public void removeAssociatedPart(ActionEvent event) throws IOException {
+
+        if (modify_AssociatedPartTable.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("Please select a Part to remove from this Product.");
+            alert.showAndWait();
+            return;
+        }
+
+        if (modify_AssociatedPartTable.getSelectionModel().getSelectedItem() != null) {
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "The selected part will no longer be associated with this product. Continue?");
+            Optional<ButtonType> selectedButton = alert.showAndWait();
+
+            if (selectedButton.isPresent() && selectedButton.get() == ButtonType.OK) {
+                associatedPartList.remove(modify_AssociatedPartTable.getSelectionModel().getSelectedItem());
+            }
         }
     }
 
+    /***
+     * Initialized the Tables on the Modify Product screen
+     * @param product variable created to pull the data associated with the Product selected
+     */
     public void initProductData(Product product) {
 
         modifyProductId.setText(Integer.toString(product.getId()));
