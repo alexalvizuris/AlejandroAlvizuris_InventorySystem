@@ -79,6 +79,7 @@ public class mainFormController {
     private Button mainExitButton;
 
 
+// Selecting this will switch screens to the Add Part screen
     public void addPartButtonSelected(ActionEvent event) throws IOException {
         Parent addPartParent = FXMLLoader.load(getClass().getResource("/view/addPart.fxml"));
         Scene addPartScene = new Scene(addPartParent);
@@ -89,8 +90,8 @@ public class mainFormController {
         stage.show();
     }
 
+// Selecting this will switch screens to the Modify Part screen and populate the selected Part's attributes
     public void modifyPartButtonSelected(ActionEvent event) throws IOException {
-
     try {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/modifyPart.fxml"));
@@ -113,6 +114,7 @@ public class mainFormController {
     }
     }
 
+// Selecting this will switch screens to the Add Products screen
     public void addProductButtonSelected(ActionEvent event) throws IOException {
         Parent addProductParent = FXMLLoader.load(getClass().getResource("/view/addProduct.fxml"));
         Scene addProductScene = new Scene(addProductParent);
@@ -123,8 +125,9 @@ public class mainFormController {
         stage.show();
     }
 
-    public void modifyProductButtonSelected(ActionEvent event) throws IOException {
 
+// Selecting this will switch screens to the Modify Products screen and populate the selected Product's attributes
+    public void modifyProductButtonSelected(ActionEvent event) throws IOException {
     try {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/modifyProduct.fxml"));
@@ -146,9 +149,8 @@ public class mainFormController {
     }
     }
 
+// Typing alphabetical or numerical text here will filter the Parts Table
     public void searchParts(ActionEvent event) {
-
-
     try {
         String searching = searchPartField.getText();
         ObservableList<Part> partsCopied = Inventory.lookupPart(searching);
@@ -171,8 +173,8 @@ public class mainFormController {
 
     }
 
+// Typing alphabetical or numerical text here will filter the Products Table
     public void searchProducts(ActionEvent event) {
-
     try {
         String searching = searchProductField.getText();
         ObservableList<Product> productsCopied = Inventory.lookupProduct(searching);
@@ -194,6 +196,7 @@ public class mainFormController {
     }
     }
 
+// Selecting this will delete a part from inventory
     public void deletePartButtonSelected() {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You are deleting an item from Inventory. Continue?");
@@ -210,6 +213,7 @@ public class mainFormController {
         }
     }
 
+// Selecting this will delete a product from Inventory
     public void deleteProductButtonSelected() {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You are deleting an item from Inventory. Continue?");
@@ -228,7 +232,7 @@ public class mainFormController {
 
 
 
-
+// This initializes the items in the Parts Table and Products Table, as well as the associated columns
     public void initialize() {
         partInventoryTable.setItems(Inventory.getAllParts());
 
@@ -247,12 +251,11 @@ public class mainFormController {
 
         partInventoryTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         productInventoryTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-
-
-
     }
 
+
+
+//Selecting this will exit the program
     public void exitButtonSelected(ActionEvent event) {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You are now EXITING the program. Continue?");

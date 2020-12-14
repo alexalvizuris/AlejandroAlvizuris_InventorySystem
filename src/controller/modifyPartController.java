@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.InHouse;
 import model.Inventory;
@@ -17,6 +14,7 @@ import model.Outsourced;
 import model.Part;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class modifyPartController {
 
@@ -57,6 +55,7 @@ public class modifyPartController {
     private Button modifyPartCancel;
 
 
+// These action events adjust the flex label to correlate to either InHouse or Outsourced
     public void inHouseModifyToggled(ActionEvent event) {
         if (inHouseModify.isSelected()) {
             flexLabel2.setText("Machine ID");
@@ -69,6 +68,8 @@ public class modifyPartController {
         }
     }
 
+
+// Selecting this will update the attributes to the selected Part, and switch screens to the Main Form screen
     public void modifyPartSaveSelected(ActionEvent event) throws IOException {
 
         if (inHouseModify.isSelected()) {
@@ -119,18 +120,27 @@ public class modifyPartController {
         stage.show();
     }
 
+
+// Selecting this will erase the input fields, and switch screens to the Main Form screen
     public void  modifyPartCancelSelected(ActionEvent event) throws IOException {
-        Parent modifyPartCancelParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
-        Scene modifyPartCancelScene = new Scene(modifyPartCancelParent);
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "No data will be saved. Continue?");
+        Optional<ButtonType> selectedButton = alert.showAndWait();
 
-        stage.setScene(modifyPartCancelScene);
-        stage.show();
+        if (selectedButton.isPresent() && selectedButton.get() == ButtonType.OK) {
+
+            Parent modifyPartCancelParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
+            Scene modifyPartCancelScene = new Scene(modifyPartCancelParent);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.setScene(modifyPartCancelScene);
+            stage.show();
+        }
     }
 
+// This initializes the data for the Part being modified
     public void initPartData(Part part) {
-
 
             modifyPartId.setText(Integer.toString(part.getId()));
             modifyPartName.setText(part.getName());

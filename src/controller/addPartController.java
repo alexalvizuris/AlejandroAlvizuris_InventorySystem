@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.InHouse;
 import model.Inventory;
@@ -17,6 +14,7 @@ import model.Outsourced;
 import model.Part;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class addPartController {
 
@@ -56,9 +54,12 @@ public class addPartController {
     @FXML
     private Button addPartCancel;
 
+
+// Selecting this will add the Part to the Part Table, and switch screens to the Main Form screen
     @FXML
     public void addPartSaveSelected(ActionEvent event) throws IOException {
 
+// This takes in user input and associates the input with the Part being created
         if (inHouseAdd.isSelected()) {
             flexLabel.setText("Machine ID");
             int id = Inventory.getAllParts().size() + 1;
@@ -71,7 +72,6 @@ public class addPartController {
 
             Part inHouse = new InHouse(id, name, price, stock, min, max, machineID);
             Inventory.addPart(inHouse);
-
         }
 
 
@@ -89,9 +89,8 @@ public class addPartController {
 
             Part outsourced = new Outsourced(id, name, price, stock, min, max, companyName);
             Inventory.addPart(outsourced);
+
         }
-
-
 
 
         Parent addPartSaveParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
@@ -101,24 +100,38 @@ public class addPartController {
 
         stage.setScene(addPartSaveScene);
         stage.show();
+
     }
 
+
+// Selecting this will erase the input fields, and switch screens to the Main Form screen
     public void addPartCancelSelected(ActionEvent event) throws IOException {
-        Parent addPartCancelParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
-        Scene addPartCancelScene = new Scene(addPartCancelParent);
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "No data will be saved. Continue?");
+        Optional<ButtonType> selectedButton = alert.showAndWait();
 
-        stage.setScene(addPartCancelScene);
-        stage.show();
+        if (selectedButton.isPresent() && selectedButton.get() == ButtonType.OK) {
+
+            Parent addPartCancelParent = FXMLLoader.load(getClass().getResource("/view/mainForm.fxml"));
+            Scene addPartCancelScene = new Scene(addPartCancelParent);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.setScene(addPartCancelScene);
+            stage.show();
+        }
     }
 
+
+// Selecting this will ensure the part is associated with the InHouse parts
     public void addPartInHouseToggled(ActionEvent event) {
         if (inHouseAdd.isSelected()) {
             flexLabel.setText("Machine ID");
         }
     }
 
+
+// Selecting this will ensure the part is associated with the Outsourced parts
     public void addPartOutsourceToggled(ActionEvent event) {
         if (outsourcedAdd.isSelected()) {
             flexLabel.setText("Company Name");
