@@ -16,6 +16,7 @@ import model.Product;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class mainFormController {
@@ -78,7 +79,6 @@ public class mainFormController {
     private Button mainExitButton;
 
 
-
     public void addPartButtonSelected(ActionEvent event) throws IOException {
         Parent addPartParent = FXMLLoader.load(getClass().getResource("/view/addPart.fxml"));
         Scene addPartScene = new Scene(addPartParent);
@@ -91,6 +91,7 @@ public class mainFormController {
 
     public void modifyPartButtonSelected(ActionEvent event) throws IOException {
 
+    try {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/modifyPart.fxml"));
         Parent modifyPartParent = loader.load();
@@ -104,6 +105,12 @@ public class mainFormController {
 
         stage.setScene(modifyPartScene);
         stage.show();
+    } catch (Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("An Error has occurred");
+        alert.setContentText("Please select a part to modify.");
+        alert.showAndWait();
+    }
     }
 
     public void addProductButtonSelected(ActionEvent event) throws IOException {
@@ -118,6 +125,7 @@ public class mainFormController {
 
     public void modifyProductButtonSelected(ActionEvent event) throws IOException {
 
+    try {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/modifyProduct.fxml"));
         Parent modifyProductParent = loader.load();
@@ -130,27 +138,42 @@ public class mainFormController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(modifyProductScene);
         stage.show();
+    } catch (Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("An Error has occurred");
+        alert.setContentText("Please select a product to modify.");
+        alert.showAndWait();
+    }
     }
 
     public void searchParts(ActionEvent event) {
 
-       String searching = searchPartField.getText();
-       ObservableList<Part> partsCopied = Inventory.lookupPart(searching);
 
-       if (partsCopied.size() == 0) {
-           int idNum = Integer.parseInt(searching);
-           Part part = Inventory.lookupPart(idNum);
-           if (part != null) {
-               partsCopied.add(part);
-           }
-       }
+    try {
+        String searching = searchPartField.getText();
+        ObservableList<Part> partsCopied = Inventory.lookupPart(searching);
 
-       partInventoryTable.setItems(partsCopied);
+        if (partsCopied.size() == 0) {
+            int idNum = Integer.parseInt(searching);
+            Part part = Inventory.lookupPart(idNum);
+            if (part != null) {
+                partsCopied.add(part);
+            }
+        }
+
+        partInventoryTable.setItems(partsCopied);
+    } catch (Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("An Error has occurred");
+        alert.setContentText("Please search using correct values.");
+        alert.showAndWait();
+    }
 
     }
 
     public void searchProducts(ActionEvent event) {
 
+    try {
         String searching = searchProductField.getText();
         ObservableList<Product> productsCopied = Inventory.lookupProduct(searching);
 
@@ -163,23 +186,43 @@ public class mainFormController {
         }
 
         productInventoryTable.setItems(productsCopied);
+    } catch (Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("An Error has occurred");
+        alert.setContentText("Please search using correct values.");
+        alert.showAndWait();
+    }
     }
 
     public void deletePartButtonSelected() {
-        ObservableList<Part> allParts, selectedPart;
-        allParts = partInventoryTable.getItems();
-        selectedPart = partInventoryTable.getSelectionModel().getSelectedItems();
-        for (Part part: selectedPart) {
-            allParts.remove(part);
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You are deleting an item from Inventory. Continue?");
+        Optional<ButtonType> selectedButton = alert.showAndWait();
+
+        if (selectedButton.isPresent() && selectedButton.get() == ButtonType.OK) {
+
+            ObservableList<Part> allParts, selectedPart;
+            allParts = partInventoryTable.getItems();
+            selectedPart = partInventoryTable.getSelectionModel().getSelectedItems();
+            for (Part part : selectedPart) {
+                allParts.remove(part);
+            }
         }
     }
 
     public void deleteProductButtonSelected() {
-        ObservableList<Product> allProducts, selectedProduct;
-        allProducts = productInventoryTable.getItems();
-        selectedProduct = productInventoryTable.getSelectionModel().getSelectedItems();
-        for (Product product: selectedProduct) {
-            allProducts.remove(product);
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You are deleting an item from Inventory. Continue?");
+        Optional<ButtonType> selectedButton = alert.showAndWait();
+
+        if (selectedButton.isPresent() && selectedButton.get() == ButtonType.OK) {
+
+            ObservableList<Product> allProducts, selectedProduct;
+            allProducts = productInventoryTable.getItems();
+            selectedProduct = productInventoryTable.getSelectionModel().getSelectedItems();
+            for (Product product : selectedProduct) {
+                allProducts.remove(product);
+            }
         }
     }
 
@@ -211,8 +254,15 @@ public class mainFormController {
     }
 
     public void exitButtonSelected(ActionEvent event) {
-        Stage stage = (Stage) mainExitButton.getScene().getWindow();
-        stage.close();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You are now EXITING the program. Continue?");
+        Optional<ButtonType> selectedButton = alert.showAndWait();
+
+        if (selectedButton.isPresent() && selectedButton.get() == ButtonType.OK) {
+
+            Stage stage = (Stage) mainExitButton.getScene().getWindow();
+            stage.close();
+        }
     }
 
 
