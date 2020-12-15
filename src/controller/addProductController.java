@@ -230,6 +230,14 @@ public class addProductController {
      * Removes Parts from the Associated Parts Table
      * @param event variable created to remove Parts from the Associated Parts Table
      * @throws IOException if the Remove Associated Part button is selected without selecting a Part to remove
+     *
+     * Initially I tried to use Try/Catch in this method. Try the code, then shoot an error message when any exceptions
+     * were found. Inside this i created the Confirmation window to remove the Part from the Associated Parts Table.
+     * However, I found the Remove Button would not shoot out any messages unless a Part was selected to be removed. Then
+     * I would get both the Catch/Error Message as well as the Confirmation message.
+     *
+     * To fix this I took away the Try/Catch, and created two IF statements. One to assess if selection was NULL, which controlled the
+     * Error Message. The Second IF statement controlled the Confirmation Message for when the selection was not NULL.
      */
     public void removeAssociatedPart(ActionEvent event) throws IOException {
 
@@ -251,8 +259,8 @@ public class addProductController {
             }
         }
 
-
     }
+
 
     /***
      * Initializes the Part Table and the Associated Part Table

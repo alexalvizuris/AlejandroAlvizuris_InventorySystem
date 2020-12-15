@@ -7,6 +7,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.*;
 
+/***
+ * Creates the Main class
+ */
 public class Main extends Application {
 
     @Override
@@ -35,3 +38,16 @@ public class Main extends Application {
         launch(args);
     }
 }
+
+/***
+ * An issue I ran into while building this project was the exception handling in the Add Product Controller. When selecting
+ * the Remove Associated Part button, even if nothing was selected I would get the Confirmation message instead. Then
+ * when I selected an associated part to remove, that's when I would get the error message. I will go into a more detailed
+ * fix I found for this in the Add Product Controller, line 234.
+ */
+
+/***
+ * If there was something I would add to this, it would probably be the functionality to see things visually. Adding Photos
+ * to Parts and Products. Also if there was the ability to order Outsourced parts directly through the inventory system
+ * from the vendors, or see if their Parts were back ordered.
+ */
