@@ -77,7 +77,7 @@ public class modifyPartController {
             int max = Integer.parseInt(modifyPartMax.getText());
             int machineID = Integer.parseInt(flexTextField2.getText());
 
-            if (name.isEmpty() || name == null) {
+            if (name.isEmpty() || name == null || name.equals(" ")) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("An Error has occurred");
                 alert.setContentText("Please use a valid input to name the part.");
@@ -99,6 +99,15 @@ public class modifyPartController {
                 alert.setContentText("The maximum amount of parts does not meet the minimum amount allowed. Please try again.");
                 return;
             }
+
+            if (max < 1 || min < 1 || machineID < 1 || price < 1) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("An Error has occurred");
+                alert.setContentText("Your input must be greater than zero.");
+                alert.showAndWait();
+                return;
+            }
+
 
             Part inHouse = new InHouse(id, name, price, stock, min, max, machineID);
 
@@ -119,7 +128,7 @@ public class modifyPartController {
             int max = Integer.parseInt(modifyPartMax.getText());
             String companyName = flexTextField2.getText();
 
-            if (name.isEmpty() || name == null) {
+            if (name.isEmpty() || name == null || name.equals(" ")) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("An Error has occurred");
                 alert.setContentText("Please use a valid input to name the part.");
@@ -139,6 +148,22 @@ public class modifyPartController {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("An Error has occurred");
                 alert.setContentText("The maximum amount of parts does not meet the minimum amount allowed. Please try again.");
+                return;
+            }
+
+            if (max < 1 || min < 1 || price < 1) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("An Error has occurred");
+                alert.setContentText("Your input must be greater than zero.");
+                alert.showAndWait();
+                return;
+            }
+
+            if (companyName.isEmpty() || companyName == null || companyName.equals(" ")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("An Error has occurred");
+                alert.setContentText("Please use a valid input to name the company.");
+                alert.showAndWait();
                 return;
             }
 

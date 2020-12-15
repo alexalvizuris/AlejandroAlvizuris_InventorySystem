@@ -105,7 +105,7 @@ public class addProductController {
         int max = Integer.parseInt(addProductMax.getText());
         int min = Integer.parseInt(addProductMin.getText());
 
-        if (name.isEmpty() || name == null) {
+        if (name.isEmpty() || name == null || name.equals(" ")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("An Error has occurred");
             alert.setContentText("Please use a valid input to name the product.");
@@ -125,8 +125,19 @@ public class addProductController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("An Error has occurred");
             alert.setContentText("The maximum amount of products does not meet the minimum amount allowed. Please try again.");
+            alert.showAndWait();
             return;
         }
+
+        if (max < 1 || min < 1 || price < 1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("Your input must be greater than zero.");
+            alert.showAndWait();
+            return;
+        }
+
+
 
         Product product = new Product(id, name, price, stock, max, min);
 
@@ -218,11 +229,20 @@ public class addProductController {
     /***
      * Selecting this will add the Selected Part to the Associated Parts Table
      * @param event variable created to add the Part to the Associated Parts list
+     * @throws IOException when no Parts have been selected before selecting Add Button
      */
-    public void addPartToAssociatedParts(ActionEvent event) {
+    public void addPartToAssociatedParts(ActionEvent event) throws IOException {
+        if (addProduct_PartTable.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("No Parts selected, please try again.");
+            alert.showAndWait();
+            return;
+        }
+        if (addProduct_PartTable.getSelectionModel().getSelectedItem() != null) {
 
-        associatedParts.add(addProduct_PartTable.getSelectionModel().getSelectedItem());
-
+            associatedParts.add(addProduct_PartTable.getSelectionModel().getSelectedItem());
+        }
     }
 
 

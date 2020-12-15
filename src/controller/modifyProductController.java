@@ -105,7 +105,7 @@ public class modifyProductController {
         int max = Integer.parseInt(modifyProductMax.getText());
         int min = Integer.parseInt(modifyProductMin.getText());
 
-        if (name.isEmpty() || name == null) {
+        if (name.isEmpty() || name == null || name.equals(" ")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("An Error has occurred");
             alert.setContentText("Please use a valid input to name the product.");
@@ -125,6 +125,14 @@ public class modifyProductController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("An Error has occurred");
             alert.setContentText("The maximum amount of products does not meet the minimum amount allowed. Please try again.");
+            return;
+        }
+
+        if (max < 1 || min < 1 || price < 1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("Your input must be greater than zero.");
+            alert.showAndWait();
             return;
         }
 
@@ -217,11 +225,21 @@ public class modifyProductController {
     /***
      * Adds selected Part to the Associated Parts Table
      * @param event variable created to add selected Part to Associated Parts
+     * @throws IOException when no Part is selected before selecting the Add Part button
      */
-    public void addPartToAssociatedParts(ActionEvent event) {
+    public void addPartToAssociatedParts(ActionEvent event) throws IOException {
 
-        associatedPartList.add(modifyProduct_PartTable.getSelectionModel().getSelectedItem());
+        if (modifyProduct_PartTable.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("No Parts selected, plese try again.");
+            alert.showAndWait();
+            return;
+        }
 
+        if(modifyProduct_PartTable.getSelectionModel().getSelectedItem() != null) {
+            associatedPartList.add(modifyProduct_PartTable.getSelectionModel().getSelectedItem());
+        }
     }
 
 

@@ -121,7 +121,7 @@ public class mainFormController {
     } catch (Exception e) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("An Error has occurred");
-        alert.setContentText("Please select a part to modify.");
+        alert.setContentText("Please select a Part to modify.");
         alert.showAndWait();
     }
     }
@@ -165,7 +165,7 @@ public class mainFormController {
     } catch (Exception e) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("An Error has occurred");
-        alert.setContentText("Please select a product to modify.");
+        alert.setContentText("Please select a Product to modify.");
         alert.showAndWait();
     }
     }
@@ -227,41 +227,49 @@ public class mainFormController {
 
     /***
      * Selecting this will delete a part from inventory
+     * @param event called when deleting a Part from Inventory
+     * @throws IOException when no Parts are selected before selecting Delete Button
      */
-    public void deletePartButtonSelected() {
+    public void deletePartButtonSelected(ActionEvent event) throws IOException {
+
+        if (partInventoryTable.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("Please select a Part to delete from the Inventory");
+            alert.showAndWait();
+            return;
+        }
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You are deleting an item from Inventory. Continue?");
         Optional<ButtonType> selectedButton = alert.showAndWait();
 
         if (selectedButton.isPresent() && selectedButton.get() == ButtonType.OK) {
-
-            ObservableList<Part> allParts, selectedPart;
-            allParts = partInventoryTable.getItems();
-            selectedPart = partInventoryTable.getSelectionModel().getSelectedItems();
-            for (Part part : selectedPart) {
-                allParts.remove(part);
-            }
+            Inventory.deletePart(partInventoryTable.getSelectionModel().getSelectedItem());
         }
     }
 
 
     /***
      * Selecting this will delete a product from Inventory
+     * @param event called when deleting a Product from Inventory
+     * @throws IOException when no Products are selected before pressing Delete Button
      */
-    public void deleteProductButtonSelected() {
+    public void deleteProductButtonSelected(ActionEvent event) throws IOException {
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You are deleting an item from Inventory. Continue?");
-        Optional<ButtonType> selectedButton = alert.showAndWait();
-
-        if (selectedButton.isPresent() && selectedButton.get() == ButtonType.OK) {
-
-            ObservableList<Product> allProducts, selectedProduct;
-            allProducts = productInventoryTable.getItems();
-            selectedProduct = productInventoryTable.getSelectionModel().getSelectedItems();
-            for (Product product : selectedProduct) {
-                allProducts.remove(product);
-            }
+        if (productInventoryTable.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("Please select a Product to delete from the Inventory");
+            alert.showAndWait();
+            return;
         }
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You are deleting an item from Inventory. Continue?");
+            Optional<ButtonType> selectedButton = alert.showAndWait();
+
+            if (selectedButton.isPresent() && selectedButton.get() == ButtonType.OK) {
+                Inventory.deleteProduct(productInventoryTable.getSelectionModel().getSelectedItem());
+            }
     }
 
 
