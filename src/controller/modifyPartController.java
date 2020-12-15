@@ -151,7 +151,7 @@ public class modifyPartController {
                 return;
             }
 
-            if (max < 1 || min < 1 || price < 1) {
+            if (max < 1 || min < 1 || price <= 0) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("An Error has occurred");
                 alert.setContentText("Your input must be greater than zero.");

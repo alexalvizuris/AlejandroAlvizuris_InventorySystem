@@ -28,7 +28,7 @@ public class mainFormController {
     private TableView<Part> partInventoryTable;
 
     @FXML
-    private TableColumn<Part,Integer> partIdColumn;
+    private TableColumn<Part, Integer> partIdColumn;
 
     @FXML
     private TableColumn<Part, String> partNameColumn;
@@ -104,26 +104,27 @@ public class mainFormController {
      * @throws IOException when a Part has not been selected prior to selecting the Modify button
      */
     public void modifyPartButtonSelected(ActionEvent event) throws IOException {
-    try {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/view/modifyPart.fxml"));
-        Parent modifyPartParent = loader.load();
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/modifyPart.fxml"));
+            Parent modifyPartParent = loader.load();
 
-        Scene modifyPartScene = new Scene(modifyPartParent);
+            Scene modifyPartScene = new Scene(modifyPartParent);
 
-        modifyPartController control = loader.getController();
-        control.initPartData(partInventoryTable.getSelectionModel().getSelectedItem());
+            modifyPartController control = loader.getController();
+            control.initPartData(partInventoryTable.getSelectionModel().getSelectedItem());
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        stage.setScene(modifyPartScene);
-        stage.show();
-    } catch (Exception e) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("An Error has occurred");
-        alert.setContentText("Please select a Part to modify.");
-        alert.showAndWait();
-    }
+            stage.setScene(modifyPartScene);
+            stage.show();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("Please select a Part to modify.");
+            alert.showAndWait();
+
+        }
     }
 
 
@@ -149,25 +150,25 @@ public class mainFormController {
      * @throws IOException when a Product has not been selected prior to selecting the Modify button
      */
     public void modifyProductButtonSelected(ActionEvent event) throws IOException {
-    try {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/view/modifyProduct.fxml"));
-        Parent modifyProductParent = loader.load();
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/modifyProduct.fxml"));
+            Parent modifyProductParent = loader.load();
 
-        Scene modifyProductScene = new Scene(modifyProductParent);
+            Scene modifyProductScene = new Scene(modifyProductParent);
 
-        modifyProductController control = loader.getController();
-        control.initProductData(productInventoryTable.getSelectionModel().getSelectedItem());
+            modifyProductController control = loader.getController();
+            control.initProductData(productInventoryTable.getSelectionModel().getSelectedItem());
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(modifyProductScene);
-        stage.show();
-    } catch (Exception e) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("An Error has occurred");
-        alert.setContentText("Please select a Product to modify.");
-        alert.showAndWait();
-    }
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(modifyProductScene);
+            stage.show();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("Please select a Product to modify.");
+            alert.showAndWait();
+        }
     }
 
 
@@ -177,25 +178,25 @@ public class mainFormController {
      * @throws IOException when characters are input which are not numbers or letters from the alphabet
      */
     public void searchParts(ActionEvent event) throws IOException {
-    try {
-        String searching = searchPartField.getText();
-        ObservableList<Part> partsCopied = Inventory.lookupPart(searching);
+        try {
+            String searching = searchPartField.getText();
+            ObservableList<Part> partsCopied = Inventory.lookupPart(searching);
 
-        if (partsCopied.size() == 0) {
-            int idNum = Integer.parseInt(searching);
-            Part part = Inventory.lookupPart(idNum);
-            if (part != null) {
-                partsCopied.add(part);
+            if (partsCopied.size() == 0) {
+                int idNum = Integer.parseInt(searching);
+                Part part = Inventory.lookupPart(idNum);
+                if (part != null) {
+                    partsCopied.add(part);
+                }
             }
-        }
 
-        partInventoryTable.setItems(partsCopied);
-    } catch (Exception e) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("An Error has occurred");
-        alert.setContentText("Please search using correct values.");
-        alert.showAndWait();
-    }
+            partInventoryTable.setItems(partsCopied);
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("Please search using correct values.");
+            alert.showAndWait();
+        }
     }
 
     /***
@@ -203,26 +204,27 @@ public class mainFormController {
      * @param event created to filter the Products Table by what ever is typed into the text field
      * @throws IOException when characters are input which are not numbers or letters from the alphabet
      */
-    public void searchProducts(ActionEvent event) throws  IOException {
-    try {
-        String searching = searchProductField.getText();
-        ObservableList<Product> productsCopied = Inventory.lookupProduct(searching);
 
-        if (productsCopied.size() == 0) {
-            int idNum = Integer.parseInt(searching);
-            Product product = Inventory.lookupProduct(idNum);
-            if (product != null) {
-                productsCopied.add(product);
+    public void searchProducts(ActionEvent event) throws IOException {
+        try {
+            String searching = searchProductField.getText();
+            ObservableList<Product> productsCopied = Inventory.lookupProduct(searching);
+
+            if (productsCopied.size() == 0) {
+                int idNum = Integer.parseInt(searching);
+                Product product = Inventory.lookupProduct(idNum);
+                if (product != null) {
+                    productsCopied.add(product);
+                }
             }
-        }
 
-        productInventoryTable.setItems(productsCopied);
-    } catch (Exception e) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("An Error has occurred");
-        alert.setContentText("Please search using correct values.");
-        alert.showAndWait();
-    }
+            productInventoryTable.setItems(productsCopied);
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("Please search using correct values.");
+            alert.showAndWait();
+        }
     }
 
     /***
@@ -230,6 +232,7 @@ public class mainFormController {
      * @param event called when deleting a Part from Inventory
      * @throws IOException when no Parts are selected before selecting Delete Button
      */
+    @FXML
     public void deletePartButtonSelected(ActionEvent event) throws IOException {
 
         if (partInventoryTable.getSelectionModel().getSelectedItem() == null) {
@@ -254,6 +257,7 @@ public class mainFormController {
      * @param event called when deleting a Product from Inventory
      * @throws IOException when no Products are selected before pressing Delete Button
      */
+    @FXML
     public void deleteProductButtonSelected(ActionEvent event) throws IOException {
 
         if (productInventoryTable.getSelectionModel().getSelectedItem() == null) {
@@ -264,12 +268,26 @@ public class mainFormController {
             return;
         }
 
+        if (productInventoryTable.getSelectionModel().getSelectedItem().getAllAssociatedParts().size() > 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("Products with Parts associated with them cannot be deleted.");
+            alert.showAndWait();
+            return;
+        }
+
+        if (productInventoryTable.getSelectionModel().getSelectedItem().getAllAssociatedParts().isEmpty()) {
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You are deleting an item from Inventory. Continue?");
             Optional<ButtonType> selectedButton = alert.showAndWait();
 
             if (selectedButton.isPresent() && selectedButton.get() == ButtonType.OK) {
+
                 Inventory.deleteProduct(productInventoryTable.getSelectionModel().getSelectedItem());
+
             }
+        }
+
     }
 
 
@@ -297,7 +315,6 @@ public class mainFormController {
     }
 
 
-
     /***
      * Selecting this will exit the program
      * @param event variable created to terminate the program
@@ -313,7 +330,6 @@ public class mainFormController {
             stage.close();
         }
     }
-
 
 
 }

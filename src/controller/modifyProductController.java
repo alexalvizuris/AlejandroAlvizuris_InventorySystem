@@ -128,7 +128,7 @@ public class modifyProductController {
             return;
         }
 
-        if (max < 1 || min < 1 || price < 1) {
+        if (max < 1 || min < 1 || price <= 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("An Error has occurred");
             alert.setContentText("Your input must be greater than zero.");
@@ -228,6 +228,14 @@ public class modifyProductController {
      * @throws IOException when no Part is selected before selecting the Add Part button
      */
     public void addPartToAssociatedParts(ActionEvent event) throws IOException {
+
+        if (associatedPartList.contains(modifyProduct_PartTable.getSelectionModel().getSelectedItem())) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("An Error has occurred");
+            alert.setContentText("The selected Part is already associated with this Product.");
+            alert.showAndWait();
+            return;
+        }
 
         if (modifyProduct_PartTable.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

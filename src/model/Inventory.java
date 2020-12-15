@@ -112,11 +112,11 @@ public class Inventory {
      * @return true
      */
     public static boolean deletePart(Part selectedPart) {
-        while (true) {
+
             if (allParts.contains(selectedPart)) {
                 allParts.remove(selectedPart);
             }
-        }
+        return false;
     }
 
     /***
@@ -125,11 +125,11 @@ public class Inventory {
      * @return true
      */
     public static boolean deleteProduct(Product selectedProduct) {
-        while (true) {
-            if (allProducts.contains(selectedProduct)) {
-                allProducts.remove(selectedProduct);
-            }
+
+        if (allProducts.contains(selectedProduct)) {
+            allProducts.remove(selectedProduct);
         }
+        return false;
     }
 
     /***
@@ -137,11 +137,7 @@ public class Inventory {
      * @return the array list of Parts
      */
     public static ObservableList<Part> getAllParts() {
-        ObservableList<Part> partsList = FXCollections.observableArrayList();
-        for (int i = 0; i < allParts.size(); i++) {
-            partsList.add(allParts.get(i));
-        }
-        return partsList;
+        return allParts;
     }
 
     /***
@@ -149,11 +145,7 @@ public class Inventory {
      * @return the array list of Products
      */
     public static ObservableList<Product> getAllProducts() {
-        ObservableList<Product> productsList = FXCollections.observableArrayList();
-        for (int i = 0; i < allProducts.size(); i++) {
-            productsList.add(allProducts.get(i));
-        }
-        return productsList;
+        return allProducts;
     }
 
 
